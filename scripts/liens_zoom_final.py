@@ -44,7 +44,7 @@ def create_list(liste_db):
 # Hérite de Ui_MainWindow, "class" d'un autre fichier juste pour faire l'interface
 class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)  # On réecrit sur la fonction __init__ de laquelle on hérite (je crois).
+        super().__init__(*args, **kwargs)  
         # self.setWindowFlag(qtc.Qt.FramelessWindowHint)  # Pour cacher les bprdes de fenêtre.
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon('zoom_app.ico'))
@@ -57,7 +57,7 @@ class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
         # Création des listes de cours et de leurs liens
         self.liste_cours = create_list(base_donnees.show_cm())
         self.url_cours = create_list(base_donnees.show_urlcm())
-        # Création des listes de cours et de leurs liens
+        # Création des listes de TD et de leurs liens
         self.liste_TD = create_list(base_donnees.show_td())
         self.url_TD = create_list(base_donnees.show_urltd())
         # Création des dico liant les listes et leurs liens respectifs
@@ -207,7 +207,7 @@ class Ajout(qtw.QWidget, Ui_Modificationlien):
 
 
 """Ici pas de compilation du fichier interface modif.ui en Python, il est chargé directement. Ce qui est plus pratique 
-car les changements sont pris en compte l'interface est modifiée sur QtDesigner, """
+car les changements sont pris en compte quand l'interface est modifiée sur QtDesigner, """
 
 class ModifiyWindow(qtw.QWidget):
     def __init__(self, *args, **kwargs):
