@@ -1,0 +1,34 @@
+[tool.briefcase]
+project_name = "CourseLink"
+bundle = "com.example"
+version = "0.0.1"
+url = "https://example.com/courselink"
+license = "Proprietary"
+author = 'Lucas Barbier'
+author_email = "lucas.barbier@protonmail.com"
+
+[tool.briefcase.app.courselink]
+formal_name = "CourseLink"
+description = "one click !"
+icon = "src/courselink/resources/courselink"
+sources = ['src/courselink']
+requires = [
+    'pyside2>=5.15.2',]
+
+
+[tool.briefcase.app.courselink.macOS]
+requires = []
+
+[tool.briefcase.app.courselink.linux]
+requires = []
+system_requires = []
+
+[tool.briefcase.app.courselink.windows]
+requires = []
+
+# Mobile deployments
+[tool.briefcase.app.courselink.iOS]
+requires = []
+
+[tool.briefcase.app.courselink.android]
+requires = []
