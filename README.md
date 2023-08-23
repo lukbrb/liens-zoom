@@ -35,7 +35,7 @@ Pour supprimer, il suffit de cliquer sur l'item souhaité et d'ensuité cliquer 
 Les liens ne correspondent pas aux titres de la combobox. Corriger la manière dont les combobox sont créées.
 Réparé.
 
-## Note dy 24/08/2023
+### Note du 24/08/2023
 
 1. Enlever ou modifier les élements supprimés ou modifiés de la combobox lorque retour à page d'accueil
 2. Réduire redondance des fonctions TD puis CM dans le code UI, et dans les fonctions de la base de données.
