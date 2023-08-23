@@ -29,3 +29,7 @@ Cette page nous donne un aperçu de la base de données, et nous permet d'édite
 Pour modifier, on clique sur l'item à modifier, on change les valeurs souhaitées dans les champs de texte à droite, puis l'on clique sur `Modifier`.
 
 Pour supprimer, il suffit de cliquer sur l'item souhaité et d'ensuité cliquer sur `Supprimer`.
+
+### Note du 23/08/2023
+
+Les liens ne correspondent pas aux titres de la combobox. Corriger la manière dont les combobox sont créées.
