@@ -5,7 +5,7 @@ from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui
 
 
-import resources.base_donnees as base_donnees
+from resources import base_donnees
 from resources.UI_main import Ui_MainWindow
 from window_add import Ajout
 from window_modif import ModifiyWindow
@@ -104,7 +104,7 @@ class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
             webbrowser.open_new_tab(str(lien_TD))
             # print("Let's go")
 
-    # Fonctions qui modifient la comobox si un signal de la fenêtre ajout est reçu
+    # Fonctions qui modifient la combobox si un signal de la fenêtre ajout est reçu
     @qtc.pyqtSlot(str, str)
     def update_combo_cm(self, nom, lien):
         self.box_cm.addItem(nom)

@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtGui
 
 
-import resources.base_donnees as base_donnees
+from resources import base_donnees
 from config import DB_PATH, MODIF_UI, WINDOW_ICON
 
 
