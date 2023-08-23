@@ -1,3 +1,4 @@
+from typing import List, Tuple
 import webbrowser
 
 from PyQt5 import QtWidgets as qtw
@@ -5,7 +6,7 @@ from PyQt5 import QtCore as qtc
 from PyQt5 import QtGui
 
 
-from base_donnees import show_cm, show_td, show_urlcm, show_urltd
+from base_donnees import show_db
 from ui.UI_main import Ui_MainWindow
 from window_add import Ajout
 from window_modif import ModifiyWindow
@@ -14,20 +15,13 @@ from config import DB_PATH, WINDOW_ICON
 
 
 # Fonction qui extrait les noms de la liste de tuples renvoyée par les fonctions de gestion de base de données
-def create_list(liste_db):
-    liste = []
-    for cm in liste_db:
-        i = cm[0]
-        if len(i) != 0:
-            liste.append(i)
-    return liste
+def create_list(liste_db: List[Tuple]):
+    return {item: url for item, url in liste_db}
 
 # ==================================================================================================================== #
 #                                           Fenêtre principale
 # ==================================================================================================================== #
 
-
-# Hérite de Ui_MainWindow, "class" d'un autre fichier juste pour faire l'interface
 class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  
@@ -41,22 +35,18 @@ class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
         self.btn_ouv_modif.setCursor(QtGui.QCursor(qtc.Qt.PointingHandCursor))
         # self.showMinimized()
 
-        # Création des listes de cours et de leurs liens
-        self.liste_cours = create_list(show_cm(DB_PATH))
-        self.url_cours = create_list(show_urlcm(DB_PATH))
-        # Création des listes de TD et de leurs liens
-        self.liste_TD = create_list(show_td(DB_PATH))
-        self.url_TD = create_list(show_urltd(DB_PATH))
         # Création des dico liant les listes et leurs liens respectifs
-        self.dico_CM = dict(zip(self.liste_cours, self.url_cours))
-        self.dico_TD = dict(zip(self.liste_TD, self.url_TD))
+        self.dico_CM = create_list(show_db(DB_PATH, 'cm'))
+        self.dico_TD = create_list(show_db(DB_PATH, 'td'))
+        self.liste_cours = self.dico_CM.keys()
+        self.liste_TD = self.dico_TD.keys()
 
         # Remplissage de la combobox cours
-        for i in self.liste_cours:
-            self.box_cm.addItem(i)
+        for cours in self.liste_cours:
+            self.box_cm.addItem(cours)
         # Remplissage de la combobox td
-        for j in self.liste_TD:
-            self.box_td.addItem(j)
+        for td in self.liste_TD:
+            self.box_td.addItem(td)
         self.btn_ouv.clicked.connect(self.ouvre)  # Bouton qui ouvre la fenêtre d'ajout
         self.btn_ouv_modif.clicked.connect(self.ouvre_modif)  # Bouton qui ouvre fenêtre de modif
         # Connecte dès qu'on bouge la combobox
@@ -81,29 +71,29 @@ class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
     def selec_CM(self):
         select_cm = self.box_cm.currentText()
         if select_cm == 'Sélectionner Cours':  # Vérifie qu'un vrai cours est sélectionné
-            msg = qtw.QMessageBox()
-            msg.setWindowTitle("Sélection invalide")
-            msg.setText("Veuillez sélectionner un nom de cours valide")
-            msg.setIcon(qtw.QMessageBox.Critical)
-            x = msg.exec_()
+            # msg = qtw.QMessageBox()
+            # msg.setWindowTitle("Sélection invalide")
+            # msg.setText("Veuillez sélectionner un nom de cours valide")
+            # msg.setIcon(qtw.QMessageBox.Critical)
+            # x = msg.exec_()
+            pass
         else:  # Lance l'URL dans le navigateur
             lien_CM = self.dico_CM[select_cm]
             webbrowser.open_new_tab(str(lien_CM))
-            # print("Let's go")
 
     def selec_TD(self):
         select_td = self.box_td.currentText()
         if select_td == 'Sélectionner TD':
-            msg = qtw.QMessageBox()
-            msg.setWindowTitle("Sélection invalide")
-            msg.setText("Veuillez sélectionner un nom de TD valide")
-            msg.setIcon(qtw.QMessageBox.Critical)
-            x = msg.exec_()
+            # msg = qtw.QMessageBox()
+            # msg.setWindowTitle("Sélection invalide")
+            # msg.setText("Veuillez sélectionner un nom de TD valide")
+            # msg.setIcon(qtw.QMessageBox.Critical)
+            # x = msg.exec_()
+            pass
 
         else:  # Lance l'URL dans le navigateur
             lien_TD = self.dico_TD[select_td]
             webbrowser.open_new_tab(str(lien_TD))
-            # print("Let's go")
 
     # Fonctions qui modifient la combobox si un signal de la fenêtre ajout est reçu
     @qtc.pyqtSlot(str, str)
