@@ -34,6 +34,7 @@ class ZoomWindow(qtw.QMainWindow, Ui_MainWindow):
         # self.setWindowFlag(qtc.Qt.FramelessWindowHint)  # Pour cacher les bprdes de fenêtre.
         self.setupUi(self)
         self.setWindowIcon(QtGui.QIcon(WINDOW_ICON))
+        self.setWindowTitle("Courliens")
         self.setFixedWidth(850)
         self.setFixedHeight(650)
         self.btn_ouv.setCursor(QtGui.QCursor(qtc.Qt.PointingHandCursor))
