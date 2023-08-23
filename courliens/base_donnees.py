@@ -7,15 +7,15 @@ import sqlite3
 def create_tab_cours(db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS info_cours (
-            nom_cours TEXT,
-            url_cours TEXT)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS info_cm (
+            nom_cm TEXT,
+            url_cm TEXT)""")
 
 
 def create_tab_td(db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS infotd (
+    c.execute("""CREATE TABLE IF NOT EXISTS info_td (
             nom_td TEXT ,
             url_td TEXT)""")
 
@@ -23,50 +23,62 @@ def create_tab_td(db_path):
 # ==================================================================================================================== #
 #                               Fonctions pour séléctionner des éléments dans les tables
 # ==================================================================================================================== #
-def show_cm(db_path):
+# def show_cm(db_path):
+#     conn = sqlite3.connect(db_path)
+#     c = conn.cursor()
+#     c.execute("""SELECT nom_cours, url_cm FROM info_cm
+#         ORDER BY nom_cours ASC """)
+#     items = c.fetchall()
+#     liste = list(items)
+#     conn.commit()
+#     conn.close()
+#     return liste
+
+
+# def show_urlcm(db_path):
+#     conn = sqlite3.connect(db_path)
+#     c = conn.cursor()
+#     c.execute("SELECT url_cm FROM info_cm ")
+#     items = c.fetchall()
+#     liste = list(items)
+#     conn.commit()
+#     conn.close()
+#     return liste
+
+
+# def show_td(db_path):
+#     conn = sqlite3.connect(db_path)
+#     c = conn.cursor()
+#     c.execute("""SELECT DISTINCT nom_td, url_td FROM info_td 
+#             ORDER BY nom_td ASC  """)
+#     items = c.fetchall()
+#     liste = list(items)
+#     conn.commit()
+#     conn.close()
+#     return liste
+
+
+def show_db(db_path: str, genre: str):
+    if not genre in ['cm', 'td']: raise ValueError(f"Genre must be 'cm' or 'td', not {genre}")
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("""SELECT nom_cours FROM info_cours
-        ORDER BY nom_cours ASC """)
+    c.execute(f"""SELECT DISTINCT nom_{genre}, url_{genre} FROM info_{genre} 
+            ORDER BY nom_{genre} ASC""")
     items = c.fetchall()
     liste = list(items)
     conn.commit()
     conn.close()
     return liste
 
-
-def show_urlcm(db_path):
-    conn = sqlite3.connect(db_path)
-    c = conn.cursor()
-    c.execute("SELECT url_cours FROM info_cours ")
-    items = c.fetchall()
-    liste = list(items)
-    conn.commit()
-    conn.close()
-    return liste
-
-
-def show_td(db_path):
-    conn = sqlite3.connect(db_path)
-    c = conn.cursor()
-    c.execute("""SELECT DISTINCT nom_td FROM infotd 
-            ORDER BY nom_td ASC  """)
-    items = c.fetchall()
-    liste = list(items)
-    conn.commit()
-    conn.close()
-    return liste
-
-
-def show_urltd(db_path):
-    conn = sqlite3.connect(db_path)
-    c = conn.cursor()
-    c.execute("SELECT url_td FROM infotd ")
-    items = c.fetchall()
-    liste = list(items)
-    conn.commit()
-    conn.close()
-    return liste
+# def show_urltd(db_path):
+#     conn = sqlite3.connect(db_path)
+#     c = conn.cursor()
+#     c.execute("SELECT url_td FROM info_td ")
+#     items = c.fetchall()
+#     liste = list(items)
+#     conn.commit()
+#     conn.close()
+#     return liste
 
 
 # ==================================================================================================================== #
@@ -76,7 +88,7 @@ def show_urltd(db_path):
 def add_one(cours, td, urlcm, urltd, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("INSERT INTO info_cours VALUES (?,?,?,?)", (cours, td, urlcm, urltd))
+    c.execute("INSERT INTO info_cm VALUES (?,?,?,?)", (cours, td, urlcm, urltd))
     conn.commit()
     conn.close()
 
@@ -84,7 +96,7 @@ def add_one(cours, td, urlcm, urltd, db_path):
 def add_cm(nom, lien, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("INSERT INTO info_cours VALUES (?,?)", (nom, lien,))
+    c.execute("INSERT INTO info_cm VALUES (?,?)", (nom, lien,))
     conn.commit()
     conn.close()
 
@@ -92,7 +104,7 @@ def add_cm(nom, lien, db_path):
 def add_td(nom, lien, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("INSERT INTO infotd VALUES (?,?)", (nom, lien,))
+    c.execute("INSERT INTO info_td VALUES (?,?)", (nom, lien,))
     conn.commit()
     conn.close()
 
@@ -101,7 +113,7 @@ def add_td(nom, lien, db_path):
 def add_many(lists, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.executemany("INSERT INTO info_cours VALUES (?,?,?,?)", lists)
+    c.executemany("INSERT INTO info_cm VALUES (?,?,?,?)", lists)
     conn.commit()
     conn.close()
 
@@ -113,7 +125,7 @@ def add_many(lists, db_path):
 def delete_one(ids, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("DELETE FROM info_cours WHERE rowid = (?)", ids)
+    c.execute("DELETE FROM info_cm WHERE rowid = (?)", ids)
     conn.commit()
     conn.close()
 
@@ -121,7 +133,7 @@ def delete_one(ids, db_path):
 def delete_cm(ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("DELETE FROM info_cours WHERE rowid = (?)", (ident,))
+    c.execute("DELETE FROM info_cm WHERE rowid = (?)", (ident,))
     conn.commit()
     conn.close()
 
@@ -129,7 +141,7 @@ def delete_cm(ident, db_path):
 def delete_td(ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("DELETE FROM infotd WHERE rowid = (?)", (ident,))
+    c.execute("DELETE FROM info_td WHERE rowid = (?)", (ident,))
     conn.commit()
     conn.close()
 
@@ -138,7 +150,7 @@ def delete_td(ident, db_path):
 def delete_many(lists, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.executemany("DELETE FROM info_cours WHERE rowid = (?)", lists)
+    c.executemany("DELETE FROM info_cm WHERE rowid = (?)", lists)
     conn.commit()
     conn.close()
 
@@ -150,7 +162,7 @@ def delete_many(lists, db_path):
 def modify_td(nom, lien, ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    sql = """UPDATE infotd
+    sql = """UPDATE info_td
                 SET nom_td = ?, 
                 url_td= ? 
                 WHERE rowid=(?)"""
@@ -161,9 +173,9 @@ def modify_td(nom, lien, ident, db_path):
 def modify_cm(nom, lien, ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    sql = """UPDATE info_cours 
+    sql = """UPDATE info_cm 
                 SET nom_cours = ?, 
-                url_cours = ? 
+                url_cm = ? 
                 WHERE rowid=(?)"""
     c.execute(sql, (nom, lien, ident))
     conn.commit()
@@ -175,7 +187,7 @@ def modify_cm(nom, lien, ident, db_path):
 def recherche_cm(objet, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("SELECT * FROM info_cours WHERE nom_cours = (?)", (objet,))
+    c.execute("SELECT * FROM info_cm WHERE nom_cours = (?)", (objet,))
     items = c.fetchall()
     conn.commit()
     conn.close()
@@ -185,7 +197,7 @@ def recherche_cm(objet, db_path):
 def recherche_td(objet, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("SELECT * FROM infotd WHERE nom_td = ?", (objet,))
+    c.execute("SELECT * FROM info_td WHERE nom_td = ?", (objet,))
     items = c.fetchall()
     conn.commit()
     conn.close()
@@ -195,7 +207,7 @@ def recherche_td(objet, db_path):
 def recherche_url_cm(ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("SELECT url_cours FROM info_cours WHERE rowid = ?", (ident,))
+    c.execute("SELECT url_cm FROM info_cm WHERE rowid = ?", (ident,))
     items = c.fetchall()
     conn.commit()
     conn.close()
@@ -205,7 +217,7 @@ def recherche_url_cm(ident, db_path):
 def recherche_url_td(ident, db_path):
     conn = sqlite3.connect(db_path)
     c = conn.cursor()
-    c.execute("SELECT url_td FROM infotd WHERE rowid = ?", (ident,))
+    c.execute("SELECT url_td FROM info_td WHERE rowid = ?", (ident,))
     items = c.fetchall()
     conn.commit()
     conn.close()
