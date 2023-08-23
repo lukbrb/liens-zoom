@@ -83,8 +83,8 @@ class ModifiyWindow(qtw.QWidget):
     def load_data(self):
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
-        sqlquery1 = """SELECT rowid,nom_cours FROM info_cours"""
-        sqlquery2 = """SELECT rowid,nom_td FROM infotd"""
+        sqlquery1 = """SELECT rowid,nom_cm FROM info_cm"""
+        sqlquery2 = """SELECT rowid,nom_td FROM info_td"""
         # Obligé de faire deux indications différentes car les deux tables ne "matchent" pas. Fonction FULL JOIN pas
         # dispo sur sqlite3
         item1 = c.execute(sqlquery1)
