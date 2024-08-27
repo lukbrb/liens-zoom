@@ -2,7 +2,7 @@
 
 Premier vrai projet de programmation. Crée dans l'idée de sauvegarder les liens Zoom de mes cours lors du confinement.
 `Courlien` peut également être utilisé pour sauvegarder ses favoris ou quoique ce soit d'autre de la forme `clé : valeur`. **Attention** néanmoins,
-la valeur n'est pas crypté lors de la sauvegarde dans la base de données.
+la valeur n'est pas chiffrée lors de la sauvegarde dans la base de données.
 
 Lors du lancement du logiciel, la page suivante s'affiche :
 
